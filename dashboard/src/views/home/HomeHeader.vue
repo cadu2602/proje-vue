@@ -11,10 +11,12 @@
         </div>
         <div class="flex">
           <button
+          @click="() => emit('create-account')"
             class="px-6 py-2 font-bold rounded-full text-white focus:outline-none">
             Creat Account
           </button>
           <button
+          @click="() => emit('login')"
             class="px-6 py-2 font-bold bg-white rounded-full text-brand-main focus:outline-none">
             Login
           </button>
@@ -43,7 +45,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  setup (_, { emit }) {
+    return { emit }
+  }
+    
+};
 </script>
 
 
