@@ -7,7 +7,7 @@ const state = reactive({
 
 export default state
 
-export function clearUser () {
+export function clearCurrentUser () {
   state.currentUser = {}
 
 }
