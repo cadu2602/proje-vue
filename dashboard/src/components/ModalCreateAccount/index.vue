@@ -129,7 +129,7 @@ export default {
       const { data, errors } = await services.auth.login({ email, password });
       if (!errors) {
         window.localStorage.setItem('token', data.token);
-        router.push({ name: 'feedbacks' });
+        router.push({ name: 'Feedbacks' });
         modal.close();
       }
 
@@ -140,7 +140,8 @@ export default {
       try {
         toast.clear();
         state.isLoading = true;
-        const { data, errors } = await services.auth.register({
+
+        const { errors } = await services.auth.register({
           name: state.name.value,
           email: state.email.value,
           password: state.password.value,
