@@ -12,7 +12,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/Feedbacks',
+    path: '/feedbacks',
     name: 'Feedbacks',
     component: Feedbacks,
     meta: {
