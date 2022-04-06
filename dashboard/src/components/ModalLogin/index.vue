@@ -48,11 +48,12 @@
           :disabled="state.isLoading"
           type="submit"
           :class="{
-            'opacity-50': state.isLoading,
+            'opacity-50': state.isLoading
           }"
-          class="btn-login font-bold bg-brand-main focus:outline-none"
+          class="btn-login font-bold bg-brand-main focus:outline-none transition-all duration-150"
         >
-          Login
+          <icon v-if="state.isLoading" name="loading" class="animate-spin" />
+          <span v-else>Login</span>
         </button>
       </form>
     </div>
@@ -65,6 +66,7 @@ import { useRouter } from "vue-router";
 import { useField } from "vee-validate";
 import { useToast } from "vue-toastification";
 import useModal from "../../hooks/useModal";
+import Icon from "../Icon";
 import {
   validateEmptyAndLength,
   validateEmptyEmail,
@@ -73,21 +75,18 @@ import {
 import services from "../../services";
 
 export default {
+  components: { Icon },
   setup() {
     const router = useRouter();
     const modal = useModal();
     const toast = useToast();
 
-    const { value: emailValue, errorMessage: emailErrorMessage } = useField(
-      "email",
-      validateEmptyEmail
-    );
-    const { value: passwordValue, errorMessage: passwordErrorMessage } =
-      useField("password", validateEmptyAndLength);
+    const { value: emailValue, errorMessage: emailErrorMessage } = useField( "email", validateEmptyEmail);
+    const { value: passwordValue, errorMessage: passwordErrorMessage } = useField("password", validateEmptyAndLength);
 
     const state = reactive({
       hasErrors: false,
-      isLoading: false,
+      isLoading: false, 
       email: {
         value: emailValue,
         errorMessage: emailErrorMessage,
@@ -181,9 +180,6 @@ span {
   margin-top: 10px;
   color: rgb(255 255 255);
   border-radius: 9999px;
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
 }
 </style>
 

@@ -8,7 +8,7 @@ const API_ENVS = {
 }
 
 const httpClient = axios.create({
-  baseUrl: API_ENVS.local
+  baseURL: API_ENVS.local
 })
 
 httpClient.interceptors.response.use((response) => response, (error) => {
