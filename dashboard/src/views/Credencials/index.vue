@@ -9,8 +9,8 @@
         Installation guide and generating your credentials
       </p>
     </div>
-    <div class="config">
-      <div class="installation">
+    <div class="flex justify-center w-full h-full">
+      <div class="flex flex-col w-4/5 max-w-6xl py-10">
         <h1 class="text-3xl font-black text-brand-darkgray">
           Installation and configuration
         </h1>
@@ -46,15 +46,14 @@
             />
           </div>
         </div>
-      </div>
-    </div>
-    <div>
-      <p class="mt-5 text-lg text-gray-800 font-regular">
-        Put the script below on your website to start getting feedback
-      </p>
-      <div class="py-3 pl-5 pr-20 mt-2 rounded bg-brand-gray">
-
-      <pre>&lt;script src="https://cadu2602-proje-vue.netlify.app?api_key={{store.User.currentUser.apiKey}}"&gt;&lt;/script&gt;</pre>
+        <div>
+          <p class="mt-5 text-lg text-gray-800 font-regular">
+            Put the script below on your website to start getting feedback
+          </p>
+          <div class="py-3 pr-20 mt-2 rounded bg-brand-gray w-1/2">
+            <pre> &lt;script src="https://cadu2602-proje-vue.netlify.app?api_key={{store.User.currentUser.apiKey}}"&gt;&lt;/script&gt;</pre>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -89,20 +88,5 @@ export default {
   justify-content: center;
   width: 100%;
   height: 112px;
-}
-.config {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-.installation {
-  display: flex;
-  flex-direction: column;
-
-  width: 80%;
-  max-width: 1152px;
-  padding-top: 40px;
-  padding-bottom: 40px;
 }
 </style>
