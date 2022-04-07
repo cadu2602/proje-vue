@@ -50,7 +50,7 @@
           <p class="mt-5 text-lg text-gray-800 font-regular">
             Put the script below on your website to start getting feedback
           </p>
-          <div class="py-3 pr-20 mt-2 rounded bg-brand-gray w-1/2">
+          <div class="py-3 pr-20 mt-2 rounded bg-brand-gray w-1/2 overflow-x-scroll">
             <pre> &lt;script src="https://cadu2602-proje-vue.netlify.app?api_key={{store.User.currentUser.apiKey}}"&gt;&lt;/script&gt;</pre>
           </div>
         </div>
