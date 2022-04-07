@@ -17,8 +17,15 @@
         <p class="mt-10 text-lg text-gray-800 font-regular">
           This here is your api key
         </p>
+        <content-loader
+          v-if="store.Global.isLoading || state.isLoading"
+          class="rounded"
+          width="600px"
+          height="50px"
+        />
 
         <div
+          v-else
           class="
             flex
             py-3
@@ -30,17 +37,19 @@
             bg-brand-gray-800
           "
         >
-          <span>{{ store.User.currentUser.apiKey }}</span>
-          <div class="flex ml-20 mr-5">
+          <span v-if="state.hasError"> Error loading apikey</span>
+
+          <span v-else>{{ store.User.currentUser.apiKey }}</span>
+          <div class="flex ml-20 mr-5" v-if="!state.hasError">
             <icon
               name="copy"
-              :color="brandColors.graydark"
+              :color="props.brandColors.graydark"
               size="24"
               class="cursor-pointer"
             />
             <icon
               name="loading"
-              :color="brandColors.graydark"
+              :color="props.brandColors.graydark"
               size="24"
               class="cursor-pointer ml-3"
             />
@@ -50,8 +59,27 @@
           <p class="mt-5 text-lg text-gray-800 font-regular">
             Put the script below on your website to start getting feedback
           </p>
-          <div class="py-3 pr-20 mt-2 rounded bg-brand-gray w-1/2 overflow-x-scroll">
-            <pre> &lt;script src="https://cadu2602-proje-vue.netlify.app?api_key={{store.User.currentUser.apiKey}}"&gt;&lt;/script&gt;</pre>
+
+          <content-loader
+            v-if="store.Global.isLoading || state.isLoading"
+            class="rounded"
+            width="600px"
+            height="50px"
+          />
+          <div
+            v-else
+            class="
+              py-3
+              pr-20
+              mt-2
+              rounded
+              bg-brand-gray
+              w-1/2
+              overflow-x-scroll
+            "
+          >
+            <span v-if="state.hasError"> Error loading script</span>
+            <pre v-else>&lt;script src="https://cadu2602-proje-vue.netlify.app?api_key={{store.User.currentUser.apiKey}}"&gt;&lt;/script&gt;</pre>
           </div>
         </div>
       </div>
@@ -59,27 +87,53 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { reactive, watch } from "vue";
 import HeaderLogged from "../../components/HeaderLogged";
+import ContentLoader from "../../components/ComponentLoader";
 import Icon from "../../components/Icon";
 import useStore from "../../hooks/useStore";
 import palette from "../../../palette";
+import services from "../../services";
+import { setApiKey } from "../../store/user";
 
-export default {
-  components: {
-    HeaderLogged,
-    Icon,
+const props = defineProps({
+  brandColors: {
+    default: "grayDark",
+    type: String,
   },
+});
 
-  setup() {
-    const store = useStore();
+const store = useStore();
+const state = reactive({
+  hasError: false,
+  isLoading: false,
+});
 
-    return {
-      store,
-      brandColors: palette.brand,
-    };
-  },
-};
+watch(
+  () => store.Global.isLoading,
+  () => {
+    if (!store.User.currentUser.apiKey) {
+      handleError(true);
+    }
+  }
+);
+
+function handleError(error) {
+  state.isLoading = false;
+  state.hasErrors = !!error;
+}
+
+async function handleGenerateApikey() {
+  try {
+    state.isLoading = true;
+    const { data } = await services.users.generateApikey();
+    setApiKey(data.apiKey);
+    state.isLoading = false;
+  } catch (error) {
+    handleError(error);
+  }
+}
 </script>
 
 <style scoped>
